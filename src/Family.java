@@ -1,13 +1,14 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class Family {
 	
-	//TODO variables 
 	private Boolean name1IsMale; //if true, then name2 is female and vice-versa
 	private String name1;
 	private String name2;
 	private ArrayList<Family> children;
-//	private ArrayList<Boolean> childrenGenders = new ArrayList<Boolean>();
 	
 	public Family() 
 	{
@@ -34,8 +35,6 @@ public class Family {
 			System.out.println("Created " + parentName + " with child " + childName);
 			return;
 		}
-		
-		
 		
 		//Check if parents exists
 		Family parent = findPersonRec(this, parentName);
@@ -136,9 +135,26 @@ public class Family {
 		return false;
 	}
 	
-	public void getChildrenOf(String parent)
+	public String[] getChildrenOf(String parent)
 	{
-		//TODO getChildrenOf code
+		//getChildrenOf code
+		Family childrenOfParent = findPersonRec(this, parent);
+		if(childrenOfParent == null)
+		{
+			System.out.print("ERROR: Parent with this name not found");
+			return null;
+		}
+		ArrayList<String> childrenNamesArray = new ArrayList<String>();
+		
+		for(Family child : childrenOfParent.getChildren())
+		{
+			childrenNamesArray.add(child.getName1());
+		}
+		Collections.sort(childrenNamesArray);
+		
+		String[] childrenNames = childrenNamesArray.toArray(new String[0]);
+
+		return childrenNames;
 	}
 	
 	public void female()
@@ -160,7 +176,11 @@ public class Family {
 	{
 		//TODO Check if male
 	}
-
+	
+	
+	
+	
+	//GETTERS AND SETTERS\
 	public Boolean getName1IsMale() {
 		return name1IsMale;
 	}

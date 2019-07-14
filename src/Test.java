@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Test {
 
@@ -11,9 +12,10 @@ public class Test {
 //		fam.getChildren().get(0).setName1("Charlie");
 //		fam.getChildren().get(0).setName2("Laura");
 		
-//		fam.setParentOf("Charlie", "Bob");
-//		fam.setParentOf("Laura", "Bob");
-//		fam.setParentOf("Laura", "Sarah");
+		fam.setParentOf("Charlie", "Bob");
+		fam.setParentOf("Laura", "Bob");
+		fam.setParentOf("Laura", "Sarah");
+		System.out.println(Arrays.toString(fam.getChildrenOf("Bob")));
 //		for(Family children : fam.getChildren())
 //		{
 //			System.out.println(children.getName1());
@@ -26,5 +28,6 @@ public class Test {
 //		if(ob == null)
 //			return;
 //		System.out.println(ob.getName1());
+		
 	}
 }
