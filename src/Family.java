@@ -24,14 +24,94 @@ public class Family {
 
 	public void setParentOf(String childName, String parentName)
 	{
+		//Check if parents exists
+			//if they do exist, check they don't have a child under this name. Then create new child
 		
+		//test to see if root node has any parents
+		if(name1 == null && name2 == null) { 
+			name1 = parentName;
+			children.add(new Family(childName));
+			System.out.println("Created " + parentName + " with child " + childName);
+			return;
+		}
+		
+		
+		
+		//Check if parents exists
+		Family parent = findPersonRec(this, parentName);
+		if(parent != null) {
+			System.out.println("Found parent with name " + parent.getName1());
+			//Parent exists 
+			//Check they don't already have a child under this name
+			for(Family child : parent.getChildren())
+			{
+				if(child.getName1().equalsIgnoreCase(childName))
+				{
+					System.out.println("ERROR: A child already exists for this parent");
+					return;
+				}//IF-end
+			} //FOR-end
+			//If reached here, a child for this parent doesn't exist, so create the child for the parent
+			parent.getChildren().add(new Family(childName));
+		} else {
+			//Parent does not exist, but check if a child exists to give them a new second parent
+			Family child = findPersonRec(this, childName);
+			if(child != null)
+			{
+				//Give the child a new parent assuming no duplicate!
+				Family childsParent = returnParentWithSpecificChildRec(this, childName);
+				if(childsParent.getName1() != null && childsParent.getName1().equalsIgnoreCase(parentName) 
+						|| childsParent.getName2() != null && childsParent.getName2().equalsIgnoreCase(parentName))
+				{
+					//Is duplicate, so return with no changes
+					System.out.println("ERROR: This parent already exists for this child");
+					return;
+				} else {
+					//Is not duplicate, so continue
+					if(childsParent.getName1() == null)
+					{
+						childsParent.setName1(parentName);
+					} else if (childsParent.getName2() == null)
+					{
+						childsParent.setName2(parentName);
+					} else {
+						System.out.println("ERROR: This child already has 2 parents");
+					}
+				}
+				
+			} else 
+			{
+				//TODO block needed?
+			}
+		}
 	}
 	
-	public Family findPersonRec(Family f, String nameSearch) //DFS using recursion to find family member
+	//DFS using recursion to find parent
+	public Family findPersonRec(Family f, String nameSearch) 
 	{
-		if(f.getName1().equalsIgnoreCase(nameSearch) || f.getName2().equalsIgnoreCase(nameSearch))
+		if(f.getName1() != null && f.getName1().equalsIgnoreCase(nameSearch) 
+				|| f.getName2() != null && f.getName2().equalsIgnoreCase(nameSearch))
 		{
-			System.out.println("found and returning");
+			return f;
+		} else {
+			if(f.getChildren() != null) {
+				for(Family child : f.getChildren())
+				{
+					Family res = findPersonRec(child, nameSearch);
+					if(res != null)
+						return res;
+				}
+			} //END-if !null
+			
+		}
+		return null;
+	}
+	
+	//DFS using recursion to find a parent with a specific child
+	public Family returnParentWithSpecificChildRec(Family f, String nameSearch) 
+	{
+		if(testChildren(f.getChildren(), nameSearch))
+		{
 			return f;
 		} else {
 			for(Family child : f.getChildren())
@@ -42,6 +122,18 @@ public class Family {
 			}
 		}
 		return null;
+	}
+	
+	//Helper method for method above 'returnParentWithSpecificChildRec()'
+	public boolean testChildren(ArrayList<Family> children, String childName)
+	{
+		for(Family child : children)
+		{
+			if(child.getName1() != null && child.getName1().equalsIgnoreCase(childName) 
+					|| child.getName2() != null && child.getName2().equalsIgnoreCase(childName))
+				return true;
+		}
+		return false;
 	}
 	
 	public void getChildrenOf(String parent)
