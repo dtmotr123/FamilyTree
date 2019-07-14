@@ -167,14 +167,56 @@ public class Family {
 		//TODO setToMale code
 	}
 	
-	public void isFemale()
+	public boolean isFemale(String name)
 	{
-		//TODO Check if female
+		//Check if female
+		Family ind = findPersonRec(this, name);
+		if(ind == null)
+		{
+			System.out.println("ERROR checking if female: There is not person with the name " + name);
+			return false;
+		}
+		
+		if(ind.getName1IsMale() == null)
+		{
+			return false;
+		}
+		else if(ind.getName1().equalsIgnoreCase(name) && ind.getName1IsMale())
+		{
+			return false;
+		} 
+		else if(ind.getName2().equalsIgnoreCase(name) && !ind.getName1IsMale())
+		{
+			return true;
+		}
+		
+		return false; 
 	}
 	
-	public void isMale()
+	public boolean isMale(String name)
 	{
-		//TODO Check if male
+		//Check if male
+		Family ind = findPersonRec(this, name);
+		if(ind == null)
+		{
+			System.out.println("ERROR checking if male: There is not person with the name " + name);
+			return false;
+		}
+		
+		if(ind.getName1IsMale() == null)
+		{
+			return false;
+		}
+		else if(ind.getName1().equalsIgnoreCase(name) && ind.getName1IsMale())
+		{
+			return true;
+		} 
+		else if(ind.getName2().equalsIgnoreCase(name) && !ind.getName1IsMale())
+		{
+			return false;
+		}
+		
+		return false; 
 	}
 	
 	
