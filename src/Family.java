@@ -77,7 +77,6 @@ public class Family {
 						System.out.println("ERROR: This child already has 2 parents");
 					}
 				}
-				
 			} 
 		}
 	}
@@ -154,16 +153,61 @@ public class Family {
 		return childrenNames;
 	}
 	
-	public void female()
+	public boolean female(String name)
 	{
-		//TODO setToFemale code
+		//setToFemale code
+		Family ind = findPersonRec(this, name);
+		if(ind == null)
+		{
+			System.out.println("ERROR assigning female: There is no person with the name " + name);
+			return false;
+		}
+		
+		if(ind.getName1IsMale() != null)
+		{
+			System.out.println("ERROR assigning female: A gender has already been assigned to " + name);
+			return false;
+		} else if(ind.getName1().equalsIgnoreCase(name))
+		{
+			ind.setName1IsMale(false);
+			return true;
+		} else if(ind.getName2().equalsIgnoreCase(name))
+		{
+			ind.setName1IsMale(true);
+			return true;
+		}
+		
+		return false; 
 	}
 	
-	public void male()
+	public boolean male(String name)
 	{
-		//TODO setToMale code
+		//setToMale code
+		Family ind = findPersonRec(this, name);
+		if(ind == null)
+		{
+			System.out.println("ERROR assigning male: There is no person with the name " + name);
+			return false;
+		}
+		
+		if(ind.getName1IsMale() != null)
+		{
+			System.out.println("ERROR assigning male: A gender has already been assigned to " + name);
+			return false;
+		} else if(ind.getName1().equalsIgnoreCase(name))
+		{
+			ind.setName1IsMale(true);
+			return true;
+		} else if(ind.getName2().equalsIgnoreCase(name))
+		{
+			ind.setName1IsMale(false);
+			return true;
+		}
+		
+		return false; 
 	}
 	
+
 	public boolean isFemale(String name)
 	{
 		//Check if female
