@@ -18,7 +18,10 @@ public class Family {
 	
 	public Family(String childName) //Creates new child
 	{
+		name1IsMale = null;
 		name1 = childName;
+		name2 = null;
+		children = new ArrayList<Family>();
 	}
 
 	public void setParentOf(String childName, String parentName)
