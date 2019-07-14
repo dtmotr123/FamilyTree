@@ -78,10 +78,7 @@ public class Family {
 					}
 				}
 				
-			} else 
-			{
-				//TODO block needed?
-			}
+			} 
 		}
 	}
 	
